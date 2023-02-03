@@ -1,12 +1,14 @@
+import { Component } from 'react';
 import './App.css';
 import 'tachyons';
 import ParticlesBg from 'particles-bg';
-import Navigation from './components/Navigation';
-import Logo from './components/Logo';
-import LinkForm from './components/Linkform';
-import StatusBar from './components/StatusBar';
-import { Component } from 'react';
-import FaceRecognition from './components/FaceRecognition';
+import Navigation from './components/Navigation/Navigation';
+import Logo from './components/Logo/Logo';
+import LinkForm from './components/LinkForm/Linkform';
+import StatusBar from './components/StatusBar/StatusBar';
+import FaceRecognition from './components/FaceRecognition/FaceRecognition';
+import SignIn from './components/SignIn/SignIn';
+import SignUp from './components/SignUp/SignUp';
 
 class App extends Component {
   constructor() {
@@ -14,7 +16,8 @@ class App extends Component {
     this.state = {
       imageUrl: '',
       imageUrlDetected: '',
-      box: {}
+      route: 'signin',
+      box: {},
     }
   }
 
@@ -82,12 +85,6 @@ class App extends Component {
     const img = document.querySelector('#img');
     const width = Number(img.width);
     const height = Number(img.height);
-    // return {
-    //   leftCol: objLocation.left_col * width,
-    //   topRow: objLocation.top_row * height,
-    //   rightCol: width - (objLocation.right_col * width),
-    //   bottomRow: height - (objLocation.bottom_row * height)
-    // }
     return {
       leftCol: objLocation.left_col * width,
       topRow: objLocation.top_row * height,
@@ -96,23 +93,36 @@ class App extends Component {
     }
   }
 
-  // displayFaceLocation = (box) => {
-  //   console.log(box)
-  //   this.setState({box: box})
-  // }
+  onRouteChange = (route) => {
+    this.setState({ route: route })
+  }
 
   render() {
+    const { route, box, imageUrlDetected } = this.state;
     return (
       <div>
         <ParticlesBg type='cobweb' bg={true} color='999999' num={200} />
-        <Navigation />
-        <Logo />
-        <StatusBar />
-        <LinkForm onLinkChange={this.onLinkChange} onDetect={this.onDetect} />
-        <FaceRecognition imageUrlDetected={this.state.imageUrlDetected} box={this.state.box} />
+        <Navigation onRouteChange={this.onRouteChange} route={route} />
+        { route === 'signin'
+            ? <>
+                <Logo />
+                <SignIn onRouteChange={this.onRouteChange} />
+              </>
+            : route === 'home'
+            ? <>
+                <Logo />
+                <StatusBar />
+                <LinkForm onLinkChange={this.onLinkChange} onDetect={this.onDetect} />
+                <FaceRecognition imageUrlDetected={imageUrlDetected} box={box} />
+              </>
+            : route === 'signup'
+            ? <SignUp onRouteChange={this.onRouteChange} />
+            : <Logo />
+        }
       </div>
     );
   }
 }
 
 export default App;
+
