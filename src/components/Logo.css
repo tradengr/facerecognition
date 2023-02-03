@@ -1,0 +1,13 @@
+.tilt {
+  display: flex;
+  justify-content: center;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  background-color: whitesmoke;
+  border-radius: 15px;
+}
+
+div {
+  color: whitesmoke;
+}
