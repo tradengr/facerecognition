@@ -18,7 +18,24 @@ class App extends Component {
       imageUrlDetected: '',
       route: 'signin',
       box: {},
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        imageDetected: '',
+        joined: ''
+      }
     }
+  }
+
+  loadUser = (data) => {
+    this.setState({ user: {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+      imageDetected: data.imageDetected,
+      joined: data.joined
+    }})
   }
 
   onLinkChange = (event) => {
@@ -27,6 +44,7 @@ class App extends Component {
 
   onDetect = () => {
     this.setState({ imageUrlDetected: this.state.imageUrl })
+
     //////////////////////////////////////////////////////////////////////////////////////////
     // In this section, we set the user authentication, app ID, model details, and the URL
     // of the image we want as an input. Change these strings to run your own example.
@@ -77,7 +95,16 @@ class App extends Component {
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
         .then(response => response.json())
         // .then(result => this.displayFaceLocation(this.faceLocation(result.outputs[0].data.regions[0].region_info.bounding_box)))
-        .then(result => this.setState({ box: this.faceLocation(result.outputs[0].data.regions[0].region_info.bounding_box) }))
+        .then(result => {
+          fetch('http://localhost:3000/image', {
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({id: this.state.user.id})
+          })
+            .then(res => res.json())
+            .then(data => this.setState({ user: {imageDetected: data}}))
+          this.setState({ box: this.faceLocation(result.outputs[0].data.regions[0].region_info.bounding_box) })
+        })
         .catch(error => console.log('error', error));
   }
 
@@ -106,12 +133,12 @@ class App extends Component {
         { route === 'signin'
             ? <>
                 <Logo />
-                <SignIn onRouteChange={this.onRouteChange} />
+                <SignIn onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
               </>
             : route === 'home'
             ? <>
                 <Logo />
-                <StatusBar />
+                <StatusBar userName={this.state.user.name} imageDetected={this.state.user.imageDetected} />
                 <LinkForm onLinkChange={this.onLinkChange} onDetect={this.onDetect} />
                 <FaceRecognition imageUrlDetected={imageUrlDetected} box={box} />
               </>
