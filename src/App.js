@@ -56,7 +56,7 @@ class App extends Component {
     const APP_ID = 'my-first-application';
     // Change these to whatever model and image URL you want to use
     const MODEL_ID = 'face-detection';
-    const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';    
+    const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abse105';    
     const IMAGE_URL = this.state.imageUrl;
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -102,7 +102,8 @@ class App extends Component {
             body: JSON.stringify({id: this.state.user.id})
           })
             .then(res => res.json())
-            .then(data => this.setState({ user: {imageDetected: data}}))
+            .then(data => this.setState(Object.assign(this.state.user, { imageDetected: data })))
+
           this.setState({ box: this.faceLocation(result.outputs[0].data.regions[0].region_info.bounding_box) })
         })
         .catch(error => console.log('error', error));
@@ -152,4 +153,3 @@ class App extends Component {
 }
 
 export default App;
-
