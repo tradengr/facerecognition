@@ -49,19 +49,19 @@ class SignUp extends Component {
                 <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
                 <input 
                   className="pa2 input-reset ba bg-transparent hover-bg-near-white hover-near-black w-100 near-white" 
-                  type="name" 
+                  type="email" 
                   name="name"  
-                  id="name"
+                  id="name" 
                   onChange={this.onNameInput}
                 />
               </div>
               <div className="mt3">
-                <label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
+                <label className="db fw6 lh-copy f6" htmlFor="name">Email</label>
                 <input 
                   className="pa2 input-reset ba bg-transparent hover-bg-near-white hover-near-black w-100 near-white" 
                   type="email" 
-                  name="email-address"  
-                  id="email-address" 
+                  name="name"  
+                  id="name" 
                   onChange={this.onEmailInput}
                 />
               </div>
