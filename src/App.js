@@ -101,6 +101,7 @@ class App extends Component {
           })
             .then(res => res.json())
             .then(data => this.setState(Object.assign(this.state.user, { imageDetected: data })))
+            .catch(console.log)
           this.setState({ box: this.faceLocation(result.outputs[0].data.regions[0].region_info.bounding_box) })})
         .catch(error => console.log('error', error));
   }
@@ -119,7 +120,21 @@ class App extends Component {
 
   onRouteChange = (route) => {
     this.setState({ route: route })
-    this.setState({ imageUrlDetected: '' }) 
+    if (route === 'signin') {
+      this.setState({
+        imageUrl: '',
+        imageUrlDetected: '',
+        route: 'signin',
+        box: {},
+        user: {
+          id: '',
+          name: '',
+          email: '',
+          imageDetected: '',
+          joined: ''
+        }
+      })
+    }
   }
 
   render() {
