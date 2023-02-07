@@ -39,12 +39,11 @@ class App extends Component {
   }
 
   onLinkChange = (event) => {
-    this.setState({ imageUrl: event.target.value }); 
+    this.setState({ imageUrl: event.target.value });
   }
 
   onDetect = () => {
     this.setState({ imageUrlDetected: this.state.imageUrl })
-
     //////////////////////////////////////////////////////////////////////////////////////////
     // In this section, we set the user authentication, app ID, model details, and the URL
     // of the image we want as an input. Change these strings to run your own example.
@@ -56,7 +55,7 @@ class App extends Component {
     const APP_ID = 'my-first-application';
     // Change these to whatever model and image URL you want to use
     const MODEL_ID = 'face-detection';
-    const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abse105';    
+    const MODEL_VERSION_ID = '6dc7e46bc9124c5c8824be4822abe105';    
     const IMAGE_URL = this.state.imageUrl;
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -94,7 +93,6 @@ class App extends Component {
 
     fetch("https://api.clarifai.com/v2/models/" + MODEL_ID + "/versions/" + MODEL_VERSION_ID + "/outputs", requestOptions)
         .then(response => response.json())
-        // .then(result => this.displayFaceLocation(this.faceLocation(result.outputs[0].data.regions[0].region_info.bounding_box)))
         .then(result => {
           fetch('http://localhost:3000/image', {
             method: 'put',
@@ -103,9 +101,7 @@ class App extends Component {
           })
             .then(res => res.json())
             .then(data => this.setState(Object.assign(this.state.user, { imageDetected: data })))
-
-          this.setState({ box: this.faceLocation(result.outputs[0].data.regions[0].region_info.bounding_box) })
-        })
+          this.setState({ box: this.faceLocation(result.outputs[0].data.regions[0].region_info.bounding_box) })})
         .catch(error => console.log('error', error));
   }
 
@@ -123,6 +119,7 @@ class App extends Component {
 
   onRouteChange = (route) => {
     this.setState({ route: route })
+    this.setState({ imageUrlDetected: '' }) 
   }
 
   render() {
@@ -144,7 +141,7 @@ class App extends Component {
                 <FaceRecognition imageUrlDetected={imageUrlDetected} box={box} />
               </>
             : route === 'signup'
-            ? <SignUp onRouteChange={this.onRouteChange} />
+            ? <SignUp onRouteChange={this.onRouteChange} loadUser={this.loadUser} />
             : <Logo />
         }
       </div>
@@ -153,3 +150,4 @@ class App extends Component {
 }
 
 export default App;
+

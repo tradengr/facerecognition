@@ -29,10 +29,11 @@ class SignUp extends Component {
         password: this.state.password
       })
     })
-      .then(res => res.json())
-      .then(data => {
-        if (data === 'success') {
-          this.props.onRouteChange('signin');
+      .then(response => response.json())
+      .then(user => {
+        if (user.email === this.state.email) {
+          this.props.loadUser(user);
+          this.props.onRouteChange('home');
         }  
       })
   }

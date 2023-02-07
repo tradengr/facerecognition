@@ -22,20 +22,14 @@ class SignIn extends Component {
       body: JSON.stringify({
         email: this.state.email,
         password: this.state.password
-      })
+      }) 
     })
       .then(res => res.json())
       .then(user => {
-        // if (data === 'success') {
-        //   this.props.onRouteChange('home');
-        // }
-
-        // if user exists
-        if (user.id === "1") {
+        if (user.email === this.state.email) {
           this.props.loadUser(user);
           this.props.onRouteChange('home');
         }
-          // signin and change route 
       })
   }
   
