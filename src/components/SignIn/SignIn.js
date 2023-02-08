@@ -35,6 +35,14 @@ class SignIn extends Component {
         }
       })
   }
+
+  componentDidMount() {
+    document.querySelector('#password').addEventListener('keydown', (event) => {
+      if (event.keyCode === 13) {
+        return this.onSignIn;
+      }
+    })
+  }
   
   render() {
     return (
@@ -61,7 +69,6 @@ class SignIn extends Component {
                   name="password"  
                   id="password" 
                   onChange={this.onPasswordInput}
-
                 />
               </div>
             </fieldset>
