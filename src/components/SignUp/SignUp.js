@@ -34,7 +34,13 @@ class SignUp extends Component {
         if (user.email === this.state.email) {
           this.props.loadUser(user);
           this.props.onRouteChange('home');
-        }  
+        } else if (user === 'Please fill all required fields'){
+          const msg = document.querySelector('#notify');
+          msg.textContent = 'Please fill all required fields'
+        } else {
+          const msg = document.querySelector('#notify');
+          msg.textContent = 'Email is already registered'
+        }
       })
   }
 
@@ -46,7 +52,7 @@ class SignUp extends Component {
             <fieldset id="sign_up" className="ba b--transparent ph0 mh0">
               <legend className="f2 fw6 ph0 mh0 near-white tc">Face Recognition</legend>
               <div className="mt3">
-                <label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
+                <label className="db fw6 lh-copy f6" htmlFor="name">* Name</label>
                 <input 
                   className="pa2 input-reset ba bg-transparent hover-bg-near-white hover-near-black w-100 near-white" 
                   type="email" 
@@ -56,17 +62,17 @@ class SignUp extends Component {
                 />
               </div>
               <div className="mt3">
-                <label className="db fw6 lh-copy f6" htmlFor="name">Email</label>
+                <label className="db fw6 lh-copy f6" htmlFor="name">* Email</label>
                 <input 
                   className="pa2 input-reset ba bg-transparent hover-bg-near-white hover-near-black w-100 near-white" 
                   type="email" 
-                  name="name"  
-                  id="name" 
+                  name="email"  
+                  id="email" 
                   onChange={this.onEmailInput}
                 />
               </div>
               <div className="mv3"> 
-                <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
+                <label className="db fw6 lh-copy f6" htmlFor="password">* Password</label>
                 <input 
                   className="b pa2 input-reset ba bg-transparent hover-bg-near-white hover-near-black w-100 near-white" 
                   type="password" 
@@ -76,6 +82,9 @@ class SignUp extends Component {
                 />
               </div>
             </fieldset>
+            <div className='center'>
+              <p id='notify' className='gold'></p>
+            </div>
             <div className="center">
               <input className="b ph3 pv2 input-reset ba b--near-white bg-transparent grow pointer f6 dib near-white" 
                       type="submit" 

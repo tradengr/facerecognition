@@ -29,6 +29,9 @@ class SignIn extends Component {
         if (user.email === this.state.email) {
           this.props.loadUser(user);
           this.props.onRouteChange('home');
+        } else {
+          const msg = document.querySelector('#notify');
+          msg.textContent = 'Invalid Username or Password'
         }
       })
   }
@@ -62,6 +65,9 @@ class SignIn extends Component {
                 />
               </div>
             </fieldset>
+            <div className='center'>
+              <p id='notify' className='gold'></p>
+            </div>
             <div className="center">
               <input className="b ph3 pv2 input-reset ba b--near-white bg-transparent grow pointer f6 dib near-white" 
                       type="submit" 
