@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Navigation = ({ onRouteChange, isSignedIn, route }) => {
+const Navigation = ({ onRouteChange, route }) => {
   if (route === 'home') {
     return (
       <nav className='flex justify-end'>
