@@ -5,7 +5,7 @@ import './Logo.css';
 const Logo = () => {
   return (
     <Tilt className='tilt'>
-        <img src='./images/facerecoglogo.png' alt='facerecognition-logo' />
+        <img src='https://cdn-icons-png.flaticon.com/512/2223/2223055.png' alt='facerecognition-logo' />
     </Tilt>
   );
 };
