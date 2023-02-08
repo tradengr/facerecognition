@@ -20,7 +20,7 @@ class SignUp extends Component {
     this.setState({ password: event.target.value });
   }
   onSignUp = () => {
-    fetch('http://localhost:3000/signup', {
+    fetch('https://facerecognition-server-ynxi.onrender.com/signup', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({

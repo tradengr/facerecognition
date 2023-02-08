@@ -16,7 +16,8 @@ class SignIn extends Component {
     this.setState({ password: event.target.value });
   }
   onSignIn = () => {
-    fetch('http://localhost:3000/signin', {
+    // fetch('http://localhost:3000/signin', {
+    fetch('https://facerecognition-server-ynxi.onrender.com/signin', {
       method: 'post',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
@@ -34,14 +35,6 @@ class SignIn extends Component {
           msg.textContent = 'Invalid Username or Password'
         }
       })
-  }
-
-  componentDidMount() {
-    document.querySelector('#password').addEventListener('keydown', (event) => {
-      if (event.keyCode === 13) {
-        return this.onSignIn;
-      }
-    })
   }
   
   render() {
